@@ -23,12 +23,13 @@ serve(async (req) => {
 
     console.log(`Calling Dorra API: ${method} ${endpoint}`);
 
+    const headers = new Headers();
+    headers.set("Authorization", `Token ${DORRA_API_KEY}`);
+    headers.set("Content-Type", "application/json");
+
     const requestOptions: RequestInit = {
       method,
-      headers: {
-        "Authorization": `Token ${DORRA_API_KEY}`,
-        "Content-Type": "application/json",
-      },
+      headers,
     };
 
     if (data && (method === "POST" || method === "PUT" || method === "PATCH")) {
