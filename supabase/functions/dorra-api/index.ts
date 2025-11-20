@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const DORRA_API_KEY = Deno.env.get("DORRA_API_KEY");
+const DORRA_API_KEY = Deno.env.get("DORRA_API_KEY")?.trim();
 const DORRA_BASE_URL = "https://hackathon-api.aheadafrica.org";
 
 const corsHeaders = {
