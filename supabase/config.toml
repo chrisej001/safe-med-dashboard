@@ -1,1 +1,4 @@
 project_id = "eqbqpcrdvubrbvzrulvt"
+
+[functions.dorra-api]
+verify_jwt = false
