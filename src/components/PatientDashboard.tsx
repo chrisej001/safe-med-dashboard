@@ -85,9 +85,13 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
       // Calculate safety alerts
       calculateSafetyAlerts(patientData, medicationsData?.results || []);
     } catch (error: any) {
+      const errorMessage = error.message || "Failed to fetch patient data. Please try again.";
+      const isConfigError = errorMessage.includes("DORRA_API_KEY contains invalid characters");
       toast({
-        title: "Error fetching patient data",
-        description: error.message,
+        title: isConfigError ? "Configuration Error" : "Error",
+        description: isConfigError 
+          ? "Backend API key is misconfigured. Please check your backend secrets." 
+          : errorMessage,
         variant: "destructive",
       });
     } finally {

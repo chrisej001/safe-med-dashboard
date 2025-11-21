@@ -47,9 +47,13 @@ export const CreatePatientAI = ({ onPatientCreated }: CreatePatientAIProps) => {
       onPatientCreated(data.id);
       setPrompt("");
     } catch (error: any) {
+      const errorMessage = error.message || "Failed to create patient";
+      const isConfigError = errorMessage.includes("DORRA_API_KEY contains invalid characters");
       toast({
-        title: "Error",
-        description: error.message || "Failed to create patient",
+        title: isConfigError ? "Configuration Error" : "Error",
+        description: isConfigError 
+          ? "Backend API key is misconfigured. Please check your backend secrets." 
+          : errorMessage,
         variant: "destructive",
       });
     } finally {
