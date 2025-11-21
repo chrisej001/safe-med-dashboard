@@ -57,11 +57,12 @@ export const AIAssistant = ({ onPatientCreated }: AIAssistantProps) => {
       }
     } catch (error: any) {
       const errorMessage = error.message || "Failed to process AI request";
-      const isConfigError = errorMessage.includes("DORRA_API_KEY contains invalid characters");
+      const isConfigError = errorMessage.includes("DORRA_API_KEY contains invalid characters") || 
+                           errorMessage.includes("DORRA_API_KEY is not configured");
       toast({
         title: isConfigError ? "Configuration Error" : "Error",
         description: isConfigError 
-          ? "Backend API key is misconfigured. Please check your backend secrets." 
+          ? "Backend API key is misconfigured or missing. Please check your backend secrets." 
           : errorMessage,
         variant: "destructive",
       });

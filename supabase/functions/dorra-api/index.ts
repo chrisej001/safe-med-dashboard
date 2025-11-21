@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const DORRA_API_KEY = Deno.env.get("DORRA_API_KEY")?.trim();
+const rawKey = Deno.env.get("DORRA_API_KEY") ?? Deno.env.get("DORRA_API");
+const DORRA_API_KEY = rawKey?.trim();
 const DORRA_BASE_URL = "https://hackathon-api.aheadafrica.org";
 
 const corsHeaders = {
@@ -18,7 +19,7 @@ serve(async (req) => {
     const { endpoint, method = "GET", data } = await req.json();
 
     if (!DORRA_API_KEY) {
-      throw new Error("DORRA_API_KEY is not configured");
+      throw new Error("DORRA_API_KEY is not configured. Please set DORRA_API or DORRA_API_KEY in backend secrets.");
     }
 
     // Validate API key contains only printable ASCII characters
