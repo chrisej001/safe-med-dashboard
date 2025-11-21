@@ -21,6 +21,13 @@ serve(async (req) => {
       throw new Error("DORRA_API_KEY is not configured");
     }
 
+    // Validate API key contains only printable ASCII characters
+    const asciiKeyRegex = /^[\x20-\x7E]+$/;
+    if (!asciiKeyRegex.test(DORRA_API_KEY)) {
+      console.error("DORRA_API_KEY contains invalid characters");
+      throw new Error("DORRA_API_KEY contains invalid characters. Please re-enter it in backend secrets without quotes or line breaks.");
+    }
+
     console.log(`Calling Dorra API: ${method} ${endpoint}`);
 
     const headers = new Headers();
